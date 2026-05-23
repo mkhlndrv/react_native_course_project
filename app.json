@@ -2,6 +2,7 @@
   "expo": {
     "name": "react_native_course_project",
     "slug": "react_native_course_project",
+    "scheme": "skycast",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +26,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": ["expo-router"]
   }
 }

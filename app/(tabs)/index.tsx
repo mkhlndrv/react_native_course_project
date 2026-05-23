@@ -1,19 +1,17 @@
 import { StatusBar } from "expo-status-bar"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 
-import { useWeather } from "./api/weather"
-import CurrentWeather from "./CurrentWeather"
-import Forecast from "./Forecast"
+import { useWeather } from "../../src/api/weather"
+import CurrentWeather from "../../src/CurrentWeather"
+import Forecast from "../../src/Forecast"
 
 const location = { name: "Barcelona", latitude: 41.385063, longitude: 2.173404 }
 
-const App: React.FC = () => {
+const Home: React.FC = () => {
   const { current, daily } = useWeather(location)
 
   return (
     <View style={styles.container}>
-      <Text>Weather App</Text>
-
       <CurrentWeather location={location} data={current} />
       <Forecast data={daily} />
 
@@ -22,7 +20,7 @@ const App: React.FC = () => {
   )
 }
 
-export default App
+export default Home
 
 const styles = StyleSheet.create({
   container: {
