@@ -1,5 +1,6 @@
 import { StyleSheet, View } from "react-native"
 
+import InfoRow from "#design/elements/InfoRow"
 import Typography from "#design/elements/Typegraphy"
 import { colors, spacing } from "#design/foundations"
 
@@ -12,25 +13,16 @@ const App: React.FC = () => {
         SkyCast is a small weather app built for FE411 at Harbour.Space.
       </Typography>
 
-      <View style={styles.row}>
-        <Typography variant="label">Data</Typography>
-        <Typography variant="normal">
-          Forecasts and current conditions from 7Timer (
-          <Typography variant="muted">www.7timer.info</Typography>).
-        </Typography>
-      </View>
+      <InfoRow label="Data">
+        Forecasts and current conditions from 7Timer (
+        <Typography variant="muted">www.7timer.info</Typography>).
+      </InfoRow>
 
-      <View style={styles.row}>
-        <Typography variant="label">Built with</Typography>
-        <Typography variant="normal">
-          Expo · React Native · TypeScript · Expo Router
-        </Typography>
-      </View>
+      <InfoRow label="Built with">
+        Expo · React Native · TypeScript · Expo Router
+      </InfoRow>
 
-      <View style={styles.row}>
-        <Typography variant="label">Version</Typography>
-        <Typography variant="normal">1.0.0</Typography>
-      </View>
+      <InfoRow label="Version">1.0.0</InfoRow>
     </View>
   )
 }
@@ -43,8 +35,5 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     padding: spacing.inside,
     gap: spacing.between,
-  },
-  row: {
-    gap: 4,
   },
 })

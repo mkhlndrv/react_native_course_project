@@ -1,8 +1,8 @@
-export const brand = "#5b6bd6"
+export const brand = "#0a84ff"
 
-export const background = "#faf8f4"
-export const surface = "#ffffff"
-export const body = "#1a1f2e"
-export const muted = "#8a8fa3"
+export const background = "#ffffff"
+export const surface = "#f7f7f8"
+export const body = "#0a0a0a"
+export const muted = "#8a8a8e"
 
-export const shadow = "rgba(30, 40, 70, 0.08)"
+export const border = "rgba(0, 0, 0, 0.06)"

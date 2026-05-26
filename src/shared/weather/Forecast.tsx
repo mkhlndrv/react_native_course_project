@@ -1,10 +1,10 @@
 import Ionicons from "@expo/vector-icons/Ionicons"
 import { useEffect, useState } from "react"
-import { ScrollView, StyleSheet, View } from "react-native"
+import { ActivityIndicator, StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typegraphy"
-import { colors, spacing } from "#design/foundations"
+import { colors } from "#design/foundations"
 
 import toWeather, { type Weather } from "./toWeather"
 
@@ -65,36 +65,64 @@ export const Forecast: React.FC<{
     <Card>
       <Typography variant="label">5-day forecast</Typography>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.days}
-      >
-        {data?.map((entry) => (
-          <View key={entry.day} style={styles.day}>
-            <Typography variant="label">{entry.day}</Typography>
-            <Ionicons
-              name={entry.weather.icon}
-              size={28}
-              color={colors.brand}
-            />
-            <Typography variant="large">{entry.max}°</Typography>
-            <Typography variant="muted">{entry.min}°</Typography>
+      {!data ? (
+        <View style={styles.loading}>
+          <ActivityIndicator color={colors.muted} />
+        </View>
+      ) : null}
+
+      <View style={styles.list}>
+        {data?.map((entry, index) => (
+          <View
+            key={entry.day}
+            style={[styles.row, index > 0 && styles.rowDivider]}
+          >
+            <View style={styles.day}>
+              <Typography variant="normal">{entry.day}</Typography>
+            </View>
+
+            <Ionicons name={entry.weather.icon} size={22} color={colors.body} />
+
+            <View style={styles.spacer} />
+
+            <View style={styles.temp}>
+              <Typography variant="large">{entry.max}°</Typography>
+            </View>
+            <View style={styles.temp}>
+              <Typography variant="muted">{entry.min}°</Typography>
+            </View>
           </View>
         ))}
-      </ScrollView>
+      </View>
     </Card>
   )
 }
 
 const styles = StyleSheet.create({
-  days: {
-    paddingTop: spacing.between,
-    gap: spacing.between,
+  loading: {
+    paddingVertical: 32,
+  },
+  list: {
+    marginTop: 12,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 10,
+    gap: 16,
+  },
+  rowDivider: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.border,
   },
   day: {
-    minWidth: 64,
-    alignItems: "center",
-    gap: 6,
+    width: 44,
+  },
+  spacer: {
+    flex: 1,
+  },
+  temp: {
+    width: 40,
+    alignItems: "flex-end",
   },
 })

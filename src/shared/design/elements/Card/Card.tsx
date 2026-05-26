@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native"
 
-import { colors, shadows, shapes, spacing } from "#design/foundations"
+import { colors, shapes, spacing } from "#design/foundations"
 
 export type CardProps = {
   children: React.ReactNode
@@ -15,10 +15,7 @@ export default Card
 const styles = StyleSheet.create({
   container: {
     padding: spacing.inside,
-    marginVertical: spacing.between / 2,
-
     borderRadius: shapes.borderRadius,
     backgroundColor: colors.surface,
-    ...shadows.main,
   },
 })

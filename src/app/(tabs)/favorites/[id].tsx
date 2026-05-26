@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.screen,
     backgroundColor: colors.background,
     justifyContent: "center",
+    gap: spacing.between,
   },
   empty: {
     flex: 1,

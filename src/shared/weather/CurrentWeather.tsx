@@ -1,8 +1,9 @@
 import Ionicons from "@expo/vector-icons/Ionicons"
 import { useEffect, useState } from "react"
-import { StyleSheet, View } from "react-native"
+import { ActivityIndicator, StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
+import Stat from "#design/elements/Stat"
 import Typography from "#design/elements/Typegraphy"
 import { colors, spacing } from "#design/foundations"
 
@@ -60,78 +61,56 @@ export const CurrentWeather: React.FC<{
       <View style={styles.hero}>
         <Typography variant="label">{location.name}</Typography>
 
-        <View style={styles.tempRow}>
-          <Ionicons
-            name={data?.weather.icon ?? "help-circle-outline"}
-            size={56}
-            color={colors.brand}
-          />
-          <Typography variant="display">
-            {data ? `${data.temperature}°` : "--"}
-          </Typography>
-        </View>
-
-        <Typography variant="large">{data?.weather.label ?? "--"}</Typography>
+        {data ? (
+          <>
+            <Typography variant="display">{data.temperature}°</Typography>
+            <View style={styles.condition}>
+              <Ionicons
+                name={data.weather.icon}
+                size={18}
+                color={colors.muted}
+              />
+              <Typography variant="normal">{data.weather.label}</Typography>
+            </View>
+          </>
+        ) : (
+          <View style={styles.loading}>
+            <ActivityIndicator color={colors.muted} />
+          </View>
+        )}
       </View>
 
       <View style={styles.divider} />
 
       <View style={styles.stats}>
-        <Stat
-          icon="speedometer-outline"
-          value={data?.wind}
-          unit="km/h"
-          label="Wind"
-        />
-        <Stat
-          icon="water-outline"
-          value={data?.humidity}
-          unit="%"
-          label="Humidity"
-        />
-        <Stat icon="cloud-outline" value={data?.cloud} unit="%" label="Cloud" />
+        <Stat value={data?.wind} unit="km/h" label="Wind" />
+        <Stat value={data?.humidity} unit="%" label="Humidity" />
+        <Stat value={data?.cloud} unit="%" label="Cloud" />
       </View>
     </Card>
-  )
-}
-
-const Stat: React.FC<{
-  icon: React.ComponentProps<typeof Ionicons>["name"]
-  value: number | undefined
-  unit: string
-  label: string
-}> = ({ icon, value, unit, label }) => {
-  return (
-    <View style={styles.stat}>
-      <Ionicons name={icon} size={20} color={colors.muted} />
-      <Typography variant="large">{value ?? "--"}</Typography>
-      <Typography variant="muted">{unit}</Typography>
-      <Typography variant="label">{label}</Typography>
-    </View>
   )
 }
 
 const styles = StyleSheet.create({
   hero: {
     alignItems: "center",
-    gap: spacing.between / 4,
+    gap: 4,
   },
-  tempRow: {
+  condition: {
     flexDirection: "row",
     alignItems: "center",
-    gap: spacing.between / 2,
+    gap: 6,
+  },
+  loading: {
+    height: 140,
+    justifyContent: "center",
   },
   divider: {
-    height: 1,
-    backgroundColor: colors.background,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: colors.border,
     marginVertical: spacing.between,
   },
   stats: {
     flexDirection: "row",
-  },
-  stat: {
-    flex: 1,
-    alignItems: "center",
-    gap: 4,
   },
 })
