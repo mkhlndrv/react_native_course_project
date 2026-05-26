@@ -1,46 +1,18 @@
 # SkyCast
 
-A weather app built with React Native and Expo as the course project for
-Harbour.Space FE411: React Native.
+SkyCast is a mobile weather app. The Home tab shows current conditions and a 5-day forecast for a fixed city, with temperature, wind, humidity, cloud cover, and a weather glyph for each day. The Favorites tab keeps a short list of saved cities — tap one to see its own current weather and forecast. A Settings tab houses an About screen with version and credits.
 
-## Stack
-
-- Expo (SDK 54) with TypeScript (strict)
-- ESLint v9 (flat config) + `@christopherjbaker/eslint-config/react-strict` + `eslint-config-expo`
-- Prettier (no semicolons, trailing commas everywhere)
-- Knip (dead-code detection)
-- `tsc --noEmit` for type-checking
-
-## Getting started
-
-```sh
-npm install
-npm start           # start the Expo dev server
-npm run ios         # open in iOS simulator
-npm run android     # open in Android emulator
-npm run web         # open in the browser
-```
-
-## Linting
-
-A single `lint` script runs typecheck, ESLint, Prettier (check mode), and Knip:
-
-```sh
-npm run lint
-```
-
-The sub-scripts (`lint-typecheck`, `lint-eslint`, `lint-prettier`, `lint-knip`)
-can be run individually.
+Forecasts come from the free 7Timer! service, so no API key is required.
 
 ## Potential features
 
-- Detect the user's current location and show the local forecast
-- Multi-day forecast (hourly + daily)
-- Save favorite cities for quick access
-- Compare weather between two or more cities side by side
-- View historical weather data for a given date and location
-- Severe weather alerts and push notifications
-- Map view with precipitation / temperature overlays
-- Unit toggle (metric / imperial)
+- Detect current location and use it as the default city
+- Search for any city instead of a fixed list
+- Compare two cities side by side
+- Hourly forecast in addition to daily
+- Historic weather lookup for a specific date
+- Severe-weather alerts and push notifications
+- Unit toggle (°C / °F, km/h / mph)
 - Light and dark theme
 - Offline cache of the last successful forecast
+- Map view with precipitation and temperature overlays
