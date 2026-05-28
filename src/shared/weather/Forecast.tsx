@@ -5,8 +5,14 @@ import { ActivityIndicator, StyleSheet, View } from "react-native"
 import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typegraphy"
 import { colors } from "#design/foundations"
+import { KEYS, usePersistedState } from "#shared/storage"
 
 import toWeather, { type Weather } from "./toWeather"
+
+type Units = "c" | "f"
+
+const toUnit = (c: number, u: Units): number =>
+  u === "f" ? Math.round((c * 9) / 5 + 32) : c
 
 type Day = {
   day: string
@@ -32,6 +38,7 @@ export const Forecast: React.FC<{
   }
 }> = ({ location }) => {
   const [data, setData] = useState<Day[]>()
+  const [units] = usePersistedState<Units>(KEYS.units, "c")
 
   useEffect(() => {
     void (async () => {
@@ -86,10 +93,14 @@ export const Forecast: React.FC<{
             <View style={styles.spacer} />
 
             <View style={styles.temp}>
-              <Typography variant="large">{entry.max}°</Typography>
+              <Typography variant="large">
+                {toUnit(entry.max, units)}°
+              </Typography>
             </View>
             <View style={styles.temp}>
-              <Typography variant="muted">{entry.min}°</Typography>
+              <Typography variant="muted">
+                {toUnit(entry.min, units)}°
+              </Typography>
             </View>
           </View>
         ))}

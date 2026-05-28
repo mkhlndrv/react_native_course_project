@@ -6,8 +6,14 @@ import Card from "#design/elements/Card"
 import Stat from "#design/elements/Stat"
 import Typography from "#design/elements/Typegraphy"
 import { colors, spacing } from "#design/foundations"
+import { KEYS, usePersistedState } from "#shared/storage"
 
 import toWeather, { cloudCover, type Weather, windKmh } from "./toWeather"
+
+type Units = "c" | "f"
+
+const toUnit = (c: number, u: Units): number =>
+  u === "f" ? Math.round((c * 9) / 5 + 32) : c
 
 type Reading = {
   weather: Weather
@@ -25,6 +31,7 @@ export const CurrentWeather: React.FC<{
   }
 }> = ({ location }) => {
   const [data, setData] = useState<Reading>()
+  const [units] = usePersistedState<Units>(KEYS.units, "c")
 
   useEffect(() => {
     void (async () => {
@@ -63,7 +70,9 @@ export const CurrentWeather: React.FC<{
 
         {data ? (
           <>
-            <Typography variant="display">{data.temperature}°</Typography>
+            <Typography variant="display">
+              {toUnit(data.temperature, units)}°
+            </Typography>
             <View style={styles.condition}>
               <Ionicons
                 name={data.weather.icon}
