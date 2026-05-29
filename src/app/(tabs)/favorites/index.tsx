@@ -1,4 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons"
+import * as Haptics from "expo-haptics"
 import { Stack } from "expo-router"
 import { Pressable, StyleSheet, View } from "react-native"
 
@@ -14,6 +15,7 @@ const App: React.FC = () => {
   )
 
   const toggle = (id: string): void => {
+    void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
     setFavIds(
       favIds.includes(id) ? favIds.filter((x) => x !== id) : [...favIds, id],
     )

@@ -1,3 +1,4 @@
+import * as Haptics from "expo-haptics"
 import { Pressable, StyleSheet, Text, View } from "react-native"
 
 import Card from "#design/elements/Card"
@@ -10,6 +11,12 @@ type Units = "c" | "f"
 const App: React.FC = () => {
   const [units, setUnits] = usePersistedState<Units>(KEYS.units, "c")
 
+  const flipUnits = (next: Units): void => {
+    if (next === units) return
+    void Haptics.selectionAsync()
+    setUnits(next)
+  }
+
   return (
     <View style={styles.container}>
       <Typography variant="title">Settings</Typography>
@@ -21,12 +28,12 @@ const App: React.FC = () => {
             <UnitButton
               label="°C"
               active={units === "c"}
-              onPress={() => setUnits("c")}
+              onPress={() => flipUnits("c")}
             />
             <UnitButton
               label="°F"
               active={units === "f"}
-              onPress={() => setUnits("f")}
+              onPress={() => flipUnits("f")}
             />
           </View>
         </View>
