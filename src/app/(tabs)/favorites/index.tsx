@@ -79,7 +79,11 @@ type RowProps = {
 const Row: React.FC<RowProps> = ({ city, saved, onToggle }) => {
   return (
     <View style={styles.row}>
-      <Pressable onPress={onToggle} hitSlop={8}>
+      <Pressable
+        onPress={onToggle}
+        hitSlop={8}
+        accessibilityLabel={`${saved ? "Remove" : "Add"} ${city.name}`}
+      >
         <Ionicons
           name={saved ? "star" : "star-outline"}
           size={22}

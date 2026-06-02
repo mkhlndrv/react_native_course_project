@@ -1,1 +1,1 @@
-export { lookupCity, searchCities } from "./lookupCity"
+export { searchCities } from "./lookupCity"

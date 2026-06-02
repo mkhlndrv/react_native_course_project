@@ -30,8 +30,3 @@ export async function searchCities(query: string, count = 5): Promise<City[]> {
     }
   })
 }
-
-export async function lookupCity(query: string): Promise<City | null> {
-  const [first] = await searchCities(query, 1)
-  return first ?? null
-}
