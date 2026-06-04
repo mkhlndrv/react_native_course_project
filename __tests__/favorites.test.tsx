@@ -3,7 +3,7 @@ import { render, userEvent } from "@testing-library/react-native"
 
 import { KEYS } from "#shared/storage"
 
-import Favorites from "./index"
+import Favorites from "../src/app/(tabs)/favorites/index"
 
 jest.mock("expo-router", () => {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -23,6 +23,7 @@ jest.mock("expo-haptics", () => ({
 
 describe("Favorites", () => {
   beforeEach(async () => {
+    global.fetch = jest.fn(() => new Promise(() => undefined)) as jest.Mock
     await AsyncStorage.clear()
     ;(AsyncStorage.setItem as jest.Mock).mockClear()
   })

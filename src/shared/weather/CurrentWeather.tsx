@@ -8,20 +8,12 @@ import Typography from "#design/elements/Typegraphy"
 import { colors, spacing } from "#design/foundations"
 import { KEYS, usePersistedState } from "#shared/storage"
 
-import toWeather, { cloudCover, type Weather, windKmh } from "./toWeather"
+import { loadCurrent, type Reading } from "./loadCurrent"
 
 type Units = "c" | "f"
 
 const toUnit = (c: number, u: Units): number =>
   u === "f" ? Math.round((c * 9) / 5 + 32) : c
-
-type Reading = {
-  weather: Weather
-  temperature: number
-  wind: number
-  humidity: number
-  cloud: number
-}
 
 export const CurrentWeather: React.FC<{
   location: {
@@ -36,27 +28,7 @@ export const CurrentWeather: React.FC<{
   useEffect(() => {
     void (async () => {
       try {
-        const response = await fetch(
-          `https://www.7timer.info/bin/api.pl?lon=${location.longitude}&lat=${location.latitude}&product=civil&output=json`,
-        )
-        const body = (await response.json()) as {
-          dataseries: Array<{
-            temp2m: number
-            rh2m: string
-            wind10m: { speed: number }
-            cloudcover: number
-            weather: string
-          }>
-        }
-        const now = body.dataseries[0]
-
-        setData({
-          weather: toWeather(now.weather),
-          temperature: now.temp2m,
-          wind: windKmh(now.wind10m.speed),
-          humidity: parseInt(now.rh2m, 10),
-          cloud: cloudCover(now.cloudcover),
-        })
+        setData(await loadCurrent(location))
       } catch (error) {
         console.warn("CurrentWeather: fetch failed", error)
       }
