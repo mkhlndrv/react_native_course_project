@@ -2,7 +2,7 @@ import { StyleSheet, View } from "react-native"
 
 import Typography from "#design/elements/Typegraphy"
 
-export type StatProps = {
+type StatProps = {
   value: number | undefined
   unit: string
   label: string

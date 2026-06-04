@@ -42,3 +42,6 @@ yarn-error.*
 
 # local course materials cache (not for grading)
 course-materials/
+
+CLAUDE.md
+AGENTS.md

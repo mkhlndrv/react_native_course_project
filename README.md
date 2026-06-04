@@ -16,3 +16,9 @@ Forecasts come from the free 7Timer! service, so no API key is required.
 - Light and dark theme
 - Offline cache of the last successful forecast
 - Map view with precipitation and temperature overlays
+
+## Continuous integration
+
+GitHub Actions runs the checks on every push to `main` and every pull request — typecheck, ESLint, Prettier, and Knip as separate steps, then the Jest suite.
+
+EAS builds run on demand (manually from the Actions tab, or by pushing a `v*` tag) and only after the checks pass. The `preview` profile produces an installable Android APK.

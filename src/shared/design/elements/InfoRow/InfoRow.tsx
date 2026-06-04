@@ -2,7 +2,7 @@ import { StyleSheet, View } from "react-native"
 
 import Typography from "#design/elements/Typegraphy"
 
-export type InfoRowProps = {
+type InfoRowProps = {
   label: string
   children: React.ReactNode
 }
