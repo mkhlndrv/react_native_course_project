@@ -11,9 +11,13 @@ import { KEYS, usePersistedState } from "#shared/storage"
 import { loadCurrent, type Reading } from "./loadCurrent"
 
 type Units = "c" | "f"
+type WindUnits = "kmh" | "mph"
 
 const toUnit = (c: number, u: Units): number =>
   u === "f" ? Math.round((c * 9) / 5 + 32) : c
+
+const toWind = (kmh: number, u: WindUnits): number =>
+  u === "mph" ? Math.round(kmh * 0.621371) : kmh
 
 export const CurrentWeather: React.FC<{
   location: {
@@ -24,6 +28,7 @@ export const CurrentWeather: React.FC<{
 }> = ({ location }) => {
   const [data, setData] = useState<Reading>()
   const [units] = usePersistedState<Units>(KEYS.units, "c")
+  const [windUnits] = usePersistedState<WindUnits>(KEYS.windUnits, "kmh")
 
   useEffect(() => {
     void (async () => {
@@ -64,7 +69,11 @@ export const CurrentWeather: React.FC<{
       <View style={styles.divider} />
 
       <View style={styles.stats}>
-        <Stat value={data?.wind} unit="km/h" label="Wind" />
+        <Stat
+          value={data ? toWind(data.wind, windUnits) : undefined}
+          unit={windUnits === "mph" ? "mph" : "km/h"}
+          label="Wind"
+        />
         <Stat value={data?.humidity} unit="%" label="Humidity" />
         <Stat value={data?.cloud} unit="%" label="Cloud" />
       </View>

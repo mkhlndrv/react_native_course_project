@@ -18,7 +18,3 @@ export const catalog: City[] = [
   { id: "paris", name: "Paris", latitude: 48.8566, longitude: 2.3522 },
   { id: "london", name: "London", latitude: 51.5074, longitude: -0.1278 },
 ]
-
-export function findCity(id: string): City | undefined {
-  return catalog.find((city) => city.id === id)
-}

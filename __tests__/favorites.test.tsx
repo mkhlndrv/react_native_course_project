@@ -28,7 +28,7 @@ describe("Favorites", () => {
     ;(AsyncStorage.setItem as jest.Mock).mockClear()
   })
 
-  it("writes the favorites list when a city's star is tapped", async () => {
+  it("saves the full city when a popular city is added", async () => {
     const user = userEvent.setup()
     const { findByLabelText } = render(<Favorites />)
 
@@ -37,7 +37,9 @@ describe("Favorites", () => {
 
     expect(AsyncStorage.setItem).toHaveBeenCalledWith(
       KEYS.favorites,
-      JSON.stringify(["tokyo"]),
+      JSON.stringify([
+        { id: "tokyo", name: "Tokyo", latitude: 35.6762, longitude: 139.6503 },
+      ]),
     )
   })
 })

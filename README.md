@@ -1,18 +1,14 @@
 # SkyCast
 
-SkyCast is a mobile weather app. The Home tab shows current conditions and a 5-day forecast for a fixed city, with temperature, wind, humidity, cloud cover, and a weather glyph for each day. The Favorites tab keeps a short list of saved cities — tap one to see its own current weather and forecast. A Settings tab houses an About screen with version and credits.
+SkyCast is a mobile weather app. The Home tab shows current conditions, an hourly strip for the next 24 hours, and a 5-day forecast — for your current location by default, or for any city you search for. The Favorites tab lets you search and save any city (each row showing its live temperature) and tap into a saved place for its full current + hourly + 5-day detail. A Settings tab toggles temperature (°C / °F) and wind-speed (km/h / mph) units, behind a drawer with an About screen.
 
-Forecasts come from the free 7Timer! service, so no API key is required.
+Forecasts come from the free 7Timer! service and city search from Open-Meteo's geocoding API, so no API key is required.
 
 ## Potential features
 
-- Detect current location and use it as the default city
-- Search for any city instead of a fixed list
 - Compare two cities side by side
-- Hourly forecast in addition to daily
 - Historic weather lookup for a specific date
 - Severe-weather alerts and push notifications
-- Unit toggle (°C / °F, km/h / mph)
 - Light and dark theme
 - Offline cache of the last successful forecast
 - Map view with precipitation and temperature overlays

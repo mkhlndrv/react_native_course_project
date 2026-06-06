@@ -1,4 +1,5 @@
 export const KEYS = {
-  favorites: "skycast:favorites",
+  favorites: "skycast:favorite-cities",
   units: "skycast:units",
+  windUnits: "skycast:wind-units",
 } as const

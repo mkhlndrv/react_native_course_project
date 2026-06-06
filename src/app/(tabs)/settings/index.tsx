@@ -7,14 +7,25 @@ import { colors, spacing } from "#design/foundations"
 import { KEYS, usePersistedState } from "#shared/storage"
 
 type Units = "c" | "f"
+type WindUnits = "kmh" | "mph"
 
 const App: React.FC = () => {
   const [units, setUnits] = usePersistedState<Units>(KEYS.units, "c")
+  const [windUnits, setWindUnits] = usePersistedState<WindUnits>(
+    KEYS.windUnits,
+    "kmh",
+  )
 
   const flipUnits = (next: Units): void => {
     if (next === units) return
     void Haptics.selectionAsync()
     setUnits(next)
+  }
+
+  const flipWind = (next: WindUnits): void => {
+    if (next === windUnits) return
+    void Haptics.selectionAsync()
+    setWindUnits(next)
   }
 
   return (
@@ -34,6 +45,24 @@ const App: React.FC = () => {
               label="°F"
               active={units === "f"}
               onPress={() => flipUnits("f")}
+            />
+          </View>
+        </View>
+      </Card>
+
+      <Card>
+        <View style={styles.row}>
+          <Typography variant="label">Wind speed</Typography>
+          <View style={styles.toggle}>
+            <UnitButton
+              label="km/h"
+              active={windUnits === "kmh"}
+              onPress={() => flipWind("kmh")}
+            />
+            <UnitButton
+              label="mph"
+              active={windUnits === "mph"}
+              onPress={() => flipWind("mph")}
             />
           </View>
         </View>

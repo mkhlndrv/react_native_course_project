@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import {
   ActivityIndicator,
   Pressable,
+  ScrollView,
   StyleSheet,
   TextInput,
   View,
@@ -14,7 +15,7 @@ import { colors, spacing } from "#design/foundations"
 import { type City } from "#shared/cities"
 import { searchCities } from "#shared/geocoding"
 import { useCurrentLocation } from "#shared/location"
-import { CurrentWeather, Forecast } from "#shared/weather"
+import { CurrentWeather, Forecast, HourlyForecast } from "#shared/weather"
 
 const fallback = {
   name: "Barcelona",
@@ -125,29 +126,34 @@ const App: React.FC = () => {
           <ActivityIndicator color={colors.muted} />
         </View>
       ) : (
-        <>
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
           <CurrentWeather location={location} />
+          <HourlyForecast location={location} />
           <Forecast location={location} />
-        </>
-      )}
 
-      {searchState === "not-found" ? (
-        <Typography variant="muted">
-          No matches for “{query}”. Try a different spelling.
-        </Typography>
-      ) : searched ? (
-        <Typography variant="muted">
-          Showing weather for {searched.name}. Tap × to reset.
-        </Typography>
-      ) : showingFallback ? (
-        <Typography variant="muted">
-          {status === "denied"
-            ? "Location permission denied — showing Barcelona."
-            : status === "unsupported"
-              ? "Location isn't available on web — showing Barcelona."
-              : "Couldn't read your location — showing Barcelona."}
-        </Typography>
-      ) : null}
+          {searchState === "not-found" ? (
+            <Typography variant="muted">
+              No matches for “{query}”. Try a different spelling.
+            </Typography>
+          ) : searched ? (
+            <Typography variant="muted">
+              Showing weather for {searched.name}. Tap × to reset.
+            </Typography>
+          ) : showingFallback ? (
+            <Typography variant="muted">
+              {status === "denied"
+                ? "Location permission denied — showing Barcelona."
+                : status === "unsupported"
+                  ? "Location isn't available on web — showing Barcelona."
+                  : "Couldn't read your location — showing Barcelona."}
+            </Typography>
+          ) : null}
+        </ScrollView>
+      )}
     </View>
   )
 }
@@ -201,5 +207,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: colors.background,
+  },
+  scroll: {
+    flex: 1,
+  },
+  scrollContent: {
+    gap: spacing.between,
+    paddingBottom: spacing.between,
   },
 })

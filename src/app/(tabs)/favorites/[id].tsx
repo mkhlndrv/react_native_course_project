@@ -1,14 +1,27 @@
 import { Stack, useLocalSearchParams } from "expo-router"
-import { StyleSheet, View } from "react-native"
+import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native"
 
 import Typography from "#design/elements/Typegraphy"
 import { colors, spacing } from "#design/foundations"
-import { findCity } from "#shared/cities"
-import { CurrentWeather, Forecast } from "#shared/weather"
+import { type City } from "#shared/cities"
+import { KEYS, usePersistedState } from "#shared/storage"
+import { CurrentWeather, Forecast, HourlyForecast } from "#shared/weather"
 
 const App: React.FC = () => {
   const { id } = useLocalSearchParams<{ id: string }>()
-  const city = findCity(id)
+  const [favorites, , loaded] = usePersistedState<City[]>(KEYS.favorites, [])
+  const city = favorites.find((c) => c.id === id)
+
+  if (!loaded) {
+    return (
+      <>
+        <Stack.Screen options={{ title: "Loading…" }} />
+        <View style={styles.center}>
+          <ActivityIndicator color={colors.muted} />
+        </View>
+      </>
+    )
+  }
 
   if (!city) {
     return (
@@ -26,10 +39,14 @@ const App: React.FC = () => {
     <>
       <Stack.Screen options={{ title: city.name }} />
 
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.content}
+      >
         <CurrentWeather location={city} />
+        <HourlyForecast location={city} />
         <Forecast location={city} />
-      </View>
+      </ScrollView>
     </>
   )
 }
@@ -39,10 +56,18 @@ export default App
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: spacing.screen,
     backgroundColor: colors.background,
-    justifyContent: "center",
+  },
+  content: {
+    paddingHorizontal: spacing.screen,
+    paddingVertical: spacing.inside,
     gap: spacing.between,
+  },
+  center: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.background,
   },
   empty: {
     flex: 1,
